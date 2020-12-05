@@ -1,0 +1,12 @@
+.header{
+    grid-area: h;
+    color: white;
+    /*background-color: beige;*/
+}
+.navWrapper{
+    display: flex;
+    justify-content: flex-end;
+}
+.nav{
+
+}

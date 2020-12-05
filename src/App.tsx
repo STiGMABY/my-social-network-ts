@@ -1,26 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import s from './App.module.css';
+import {Header} from "./Components/Header/Header";
+import {Nav} from "./Components/Nav/Nav";
+import {Main} from "./Components/Main/Main";
+import {Footer} from "./Components/Footer/Footer";
+import {UsersList} from "./Components/UserList/UsersList";
+import {BrowserRouter, Route} from "react-router-dom";
+import {Registration} from "./Components/Registration/Registration";
+import {Login} from "./Components/Login/Login";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => (
+    <BrowserRouter>
+        <div>
+            <div className={s.gridContainer}>
+                <Header/>
+                <Nav/>
+                <div>
+                    <Route exact path={'/'} render={() => <Main/>}/>
+                    <Route path={'/users-list'} render={() => <UsersList/>}/>
+                    <Route path={'/registration'} render={() => <Registration/>}/>
+                    <Route path={'/login'} render={() => <Login/>}/>
+                </div>
+                <Footer/>
+            </div>
+        </div>
+    </BrowserRouter>
+);
 
 export default App;
