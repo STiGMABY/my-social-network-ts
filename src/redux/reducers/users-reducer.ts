@@ -2,63 +2,77 @@ const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET_USERS'
 
+//------------------ SocialNetAPIUsersType
+export type SocialNetAPIUsersType = {
+    name: string
+    id: number
+    uniqueUrlName: string | null
+    photos: {
+        small: string
+        large: string
+    }
+    status: string
+    followed: boolean
+}//-------------------
+
+//------------------- ACTIONS TYPES
 type FollowUserType = ({
-    type: 'FOLLOW',
+    type: typeof FOLLOW,
     userId: number
 })
 
 type UnfollowUserType = ({
-    type: 'UNFOLLOW',
+    type: typeof UNFOLLOW,
     userId: number
 })
+type SetUsersFromAPIType = ({
+    type: typeof SET_USERS,
+    users: Array<SocialNetAPIUsersType>
+}) //-------------------
 
-type UserReducerActionsType = FollowUserType | UnfollowUserType
+type UsersReducerActionsType = FollowUserType | UnfollowUserType | SetUsersFromAPIType
 
 export type DefaultStateType = {
-    users: Array<UsersType>
-}
-
-export type UsersType = {
-    id: number, follow: boolean, name: string, age: number
+    users: Array<SocialNetAPIUsersType>
 }
 
 const defaultState = {
-    users: [
-        {id: 1, follow: false, name: 'Andrei', age: 35},
-        {id: 2, follow: false, name: 'Vasia', age: 30},
-        {id: 3, follow: false, name: 'Kolia', age: 16},
-        {id: 4, follow: false, name: 'Gena', age: 40},
-        {id: 5, follow: true, name: 'Ivan', age: 35}
-    ]
+    users: []
 }
-
-export const usersPageReducer = (state: DefaultStateType = defaultState, action: UserReducerActionsType) => {
+export const usersPageReducer = (state: DefaultStateType = defaultState, action: UsersReducerActionsType): DefaultStateType => {
     switch (action.type) {
-        case 'FOLLOW':
+        case FOLLOW:
             return {
                 ...state,
-                users: state.users.map(u => {
+                users: state.users.map((u): SocialNetAPIUsersType => {
                     if(u.id === action.userId){
-                        return {...u, follow: true}
+                        return {...u, followed: true}
+                    } else {
+                        return u
                     }
-                    return u
+
                 })
             }
-        case "UNFOLLOW":
+        case UNFOLLOW:
             return {
                 ...state,
-                users: state.users.map(u => {
+                users: state.users.map((u): SocialNetAPIUsersType => {
                     if (u.id === action.userId) {
-                        return {...u, follow: false}
+                        return {...u, followed: false}
+                    } else {
+                        return u
                     }
-                    return u
+
                 })
             }
+        case SET_USERS:
+            return {...state, users: action.users}
         default:
             return state
 
     }
 }
 
-export const followUser = (userId: number) => ({type: FOLLOW, userId})
-export const unfollowUser = (userId: number) => ({type: UNFOLLOW, userId})
+export const followUser = (userId: number): FollowUserType => ({type: FOLLOW, userId})
+export const unfollowUser = (userId: number): UnfollowUserType => ({type: UNFOLLOW, userId})
+export const setUsersFromApi = (users: Array<SocialNetAPIUsersType>): SetUsersFromAPIType => ({type: SET_USERS, users})
