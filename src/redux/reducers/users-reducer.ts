@@ -37,7 +37,7 @@ export type DefaultStateType = {
 }
 
 const defaultState = {
-    users: []
+    users: [] as Array<SocialNetAPIUsersType>
 }
 export const usersPageReducer = (state: DefaultStateType = defaultState, action: UsersReducerActionsType): DefaultStateType => {
     switch (action.type) {
