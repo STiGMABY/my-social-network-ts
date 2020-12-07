@@ -27,20 +27,21 @@ export const UserListItem = (props: PropsType) => {
     const unfollowUserFunc = (userId: number) => {
         dispatch(unfollowUser(userId))
     }
+
     return (
-        <div className={s.userListItemWrapper}>
-            <div>
-                <div className={s.photo}>
-                    <img src={photos.small !== null ? photos.small : avaAnonymous} alt="Avatar"/>
+            <div className={s.userListItemWrapper}>
+                <div>
+                    <div className={s.photo}>
+                        <img src={photos.small !== null ? photos.small : avaAnonymous} alt="Avatar"/>
+                    </div>
+                    <div>{followed
+                        ? <button onClick={() => unfollowUserFunc(id)}>Unfollow</button>
+                        : <button onClick={() => followUserFunc(id)}>Follow</button>}</div>
                 </div>
-                <div>{followed
-                    ? <button onClick={() => unfollowUserFunc(id)}>Unfollow</button>
-                    : <button onClick={() => followUserFunc(id)}>Follow</button>}</div>
+                <div className={s.userInfoWrapper}>
+                    <div className={s.name}>{name}</div>
+                    <div>{status !== null ? status : <span>Double click and set your status</span>}</div>
+                </div>
             </div>
-            <div className={s.userInfoWrapper}>
-                <div className={s.name}>{name}</div>
-                <div>{status !== null ? status : <span>Double click and set your status</span>}</div>
-            </div>
-        </div>
     )
 }
