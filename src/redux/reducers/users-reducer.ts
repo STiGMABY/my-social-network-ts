@@ -3,6 +3,7 @@ const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET_USERS'
 const CHANGE_CURRENT_USERS_PAGE = 'CHANGE_CURRENT_USERS_PAGE'
 const GET_TOTAL_USERS_COUNT_FROM_API = 'GET_TOTAL_USERS_COUNT_FROM_API'
+const IS_FETCHING = 'IS_FETCHING'
 
 //------------------ SocialNetAPIUsersType
 export type SocialNetAPIUsersType = {
@@ -39,6 +40,10 @@ type ChangeCurrentUserPageType = {
 type GetTotalUsersCountFromApi = {
     type: typeof GET_TOTAL_USERS_COUNT_FROM_API,
     totalUsersCount: number
+}
+type IsFetchingType = {
+    type: typeof IS_FETCHING,
+    isFetching: boolean
 }//-------------------
 
 type UsersReducerActionsType =
@@ -46,20 +51,23 @@ type UsersReducerActionsType =
     UnfollowUserType |
     SetUsersFromAPIType |
     ChangeCurrentUserPageType |
-    GetTotalUsersCountFromApi
+    GetTotalUsersCountFromApi |
+    IsFetchingType
 
 export type DefaultStateType = {
     users: Array<SocialNetAPIUsersType>,
     totalUsersCount: number,
     pageSize: number,
-    currentPage: number
+    currentPage: number,
+    isFetching: boolean
 }
 
 const defaultState = {
     users: [] as Array<SocialNetAPIUsersType>,
     totalUsersCount: 0,
     pageSize: 3,
-    currentPage: 1
+    currentPage: 1,
+    isFetching: false
 }
 export const usersPageReducer = (state: DefaultStateType = defaultState, action: UsersReducerActionsType): DefaultStateType => {
     switch (action.type) {
@@ -94,6 +102,8 @@ export const usersPageReducer = (state: DefaultStateType = defaultState, action:
         case GET_TOTAL_USERS_COUNT_FROM_API: {
             return {...state, totalUsersCount: action.totalUsersCount}
         }
+        case IS_FETCHING:
+            return {...state, isFetching: action.isFetching}
         default:
             return state
 
@@ -111,3 +121,4 @@ export const changeCurrenUserstPage = (currentPage: number): ChangeCurrentUserPa
     type: CHANGE_CURRENT_USERS_PAGE,
     currentPage
 })
+export const isFetchingUsers = (isFetching: boolean): IsFetchingType => ({type: IS_FETCHING, isFetching})

@@ -1,3 +1,10 @@
 .pagesToggle{
     font-weight: bold;
 }
+
+.preloader img{
+    display: block;
+    margin: auto auto;
+    height: 400px;
+    width: 400px;
+}

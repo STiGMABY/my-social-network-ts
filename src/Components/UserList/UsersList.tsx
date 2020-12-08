@@ -5,11 +5,13 @@ import {AppStateType} from "../../redux/redux";
 import {
     changeCurrenUserstPage,
     getTotalUsersCountFromApi,
+    isFetchingUsers,
     setUsersFromApi,
     SocialNetAPIUsersType
 } from "../../redux/reducers/users-reducer";
 import axios from 'axios'
 import {UserListItem} from "./UserListItem/UserListItem";
+import preloader from '../../images/blueCat.gif'
 
 
 export const UsersList = () => {
@@ -19,12 +21,15 @@ export const UsersList = () => {
     const totalUsersCount = useSelector<AppStateType, number>(state => state.usersPageReducer.totalUsersCount)
     const pageSize = useSelector<AppStateType, number>(state => state.usersPageReducer.pageSize)
     const currantPage = useSelector<AppStateType, number>(state => state.usersPageReducer.currentPage)
+    const isFetching = useSelector<AppStateType, boolean>(state => state.usersPageReducer.isFetching)
     const dispatch = useDispatch()
 
     useEffect(() => {
+        dispatch(isFetchingUsers(true))
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currantPage}&count=${pageSize}`)
             .then(response => {
                 //debugger
+                dispatch(isFetchingUsers(false))
                 dispatch(setUsersFromApi(response.data.items))
                 dispatch(getTotalUsersCountFromApi(response.data.totalCount = 17))
             })
@@ -58,16 +63,20 @@ export const UsersList = () => {
             </div>
             <div>
                 {
-                    users.map(u => {
-                        return <UserListItem
-                            key={u.id}
-                            id={u.id}
-                            name={u.name}
-                            followed={u.followed}
-                            status={u.status}
-                            photos={u.photos}
-                        />
-                    })
+                    isFetching
+                        ? <div className={s.preloader}>
+                            <img src={preloader}/>
+                        </div>
+                        : users.map(u => {
+                            return <UserListItem
+                                key={u.id}
+                                id={u.id}
+                                name={u.name}
+                                followed={u.followed}
+                                status={u.status}
+                                photos={u.photos}
+                            />
+                        })
                 }
             </div>
         </div>
