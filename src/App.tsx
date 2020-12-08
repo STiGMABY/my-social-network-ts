@@ -16,7 +16,7 @@ const App = () => (
                 <Header/>
                 <Nav/>
                 <div>
-                    <Route exact path={'/'} render={() => <Main/>}/>
+                    <Route path={'/main-page'} render={() => <Main/>}/>
                     <Route path={'/users-list'} render={() => <UsersList/>}/>
                     <Route path={'/registration'} render={() => <Registration/>}/>
                     <Route path={'/login'} render={() => <Login/>}/>
