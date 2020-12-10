@@ -23,7 +23,6 @@ export const followUserDAL = (id: number) => {
     return instance.post(`follow/${id}`, {})
 }
 
-
 export const authUserDAL = () => {
     return instance.get(`auth/me`)
 }

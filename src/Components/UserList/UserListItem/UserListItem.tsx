@@ -1,6 +1,6 @@
 import React from "react";
 import s from './UserListItem.module.css'
-import {followUser, unfollowUser} from "../../../redux/reducers/users-reducer";
+import {fetchingFollowingInProgress, followUser, unfollowUser} from "../../../redux/reducers/users-reducer";
 import {useDispatch} from "react-redux";
 import avaAnonymous from '../../../common/images/avaAnonymous.jpg'
 import {NavLink} from "react-router-dom";
@@ -15,10 +15,12 @@ type PropsType = {
     }
     status: string
     followed: boolean
+    isFollowingInProgress: boolean
 }
 
 export const UserListItem = (props: PropsType) => {
-    const {id, name, photos, followed, status} = props
+
+    const {id, name, photos, followed, status, isFollowingInProgress} = props
 
     const dispatch = useDispatch()
 
@@ -39,7 +41,9 @@ export const UserListItem = (props: PropsType) => {
                     </NavLink>
                 </div>
                 <div>{followed
-                    ? <button onClick={() => {
+                    ? <button
+
+                        onClick={() => {
                         unfollowUserDAL(id)
                             .then(res => {
                                 //debugger
@@ -50,11 +54,15 @@ export const UserListItem = (props: PropsType) => {
                     }
                     }>Unfollow</button>
 
-                    : <button onClick={() => {
+                    : <button
+                        disabled={isFollowingInProgress}
+                        onClick={() => {
+                        dispatch(fetchingFollowingInProgress(true))
                         followUserDAL(id)
                             .then(res => {
                                 if (res.data.resultCode === 0) {
                                     followUserFunc(id)
+                                    dispatch(fetchingFollowingInProgress(false))
                                 }
                             })
                     }}>Follow</button>}</div>
