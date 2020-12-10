@@ -22,7 +22,7 @@ export const UsersList = () => {
     const pageSize = useSelector<AppStateType, number>(state => state.usersPageReducer.pageSize)
     const currantPage = useSelector<AppStateType, number>(state => state.usersPageReducer.currentPage)
     const isFetching = useSelector<AppStateType, boolean>(state => state.usersPageReducer.isFetching)
-    const isFollowingInProgress = useSelector<AppStateType, boolean>(state => state.usersPageReducer.followingInProgress)
+    const isFollowingInProgress = useSelector<AppStateType, Array<number>>(state => state.usersPageReducer.followingInProgress)
     const dispatch = useDispatch()
 
     useEffect(() => {

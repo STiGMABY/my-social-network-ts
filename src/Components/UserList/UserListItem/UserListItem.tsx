@@ -15,7 +15,7 @@ type PropsType = {
     }
     status: string
     followed: boolean
-    isFollowingInProgress: boolean
+    isFollowingInProgress: Array<number>
 }
 
 export const UserListItem = (props: PropsType) => {
@@ -42,30 +42,32 @@ export const UserListItem = (props: PropsType) => {
                 </div>
                 <div>{followed
                     ? <button
-
+                        disabled={isFollowingInProgress.some(userId => userId === id)}
                         onClick={() => {
-                        unfollowUserDAL(id)
-                            .then(res => {
-                                //debugger
-                                if (res.data.resultCode === 0) {
-                                    unfollowUserFunc(id)
-                                }
-                            })
-                    }
-                    }>Unfollow</button>
+                            dispatch(fetchingFollowingInProgress(id, true))
+                            unfollowUserDAL(id)
+                                .then(res => {
+                                    //debugger
+                                    if (res.data.resultCode === 0) {
+                                        unfollowUserFunc(id)
+                                        dispatch(fetchingFollowingInProgress(id, false))
+                                    }
+                                })
+                        }
+                        }>Unfollow</button>
 
                     : <button
-                        disabled={isFollowingInProgress}
+                        disabled={isFollowingInProgress.some(userId => userId === id)}
                         onClick={() => {
-                        dispatch(fetchingFollowingInProgress(true))
-                        followUserDAL(id)
-                            .then(res => {
-                                if (res.data.resultCode === 0) {
-                                    followUserFunc(id)
-                                    dispatch(fetchingFollowingInProgress(false))
-                                }
-                            })
-                    }}>Follow</button>}</div>
+                            dispatch(fetchingFollowingInProgress(id, true))
+                            followUserDAL(id)
+                                .then(res => {
+                                    if (res.data.resultCode === 0) {
+                                        followUserFunc(id)
+                                        dispatch(fetchingFollowingInProgress(id, false))
+                                    }
+                                })
+                        }}>Follow</button>}</div>
             </div>
             <div className={s.userInfoWrapper}>
                 <div className={s.name}>{name}</div>

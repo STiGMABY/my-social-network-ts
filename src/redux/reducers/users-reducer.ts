@@ -50,7 +50,7 @@ type IsFetchingType = {
 type ToggleFollowingUserType = {
     type: typeof FETCHING_FOLLOWING_IN_PROGRESS,
     isFollowingInProgress: boolean
-    //userId: number
+    userId: number
 }//-------------------
 
 type UsersReducerActionsType =
@@ -68,7 +68,7 @@ export type DefaultStateType = {
     pageSize: number,
     currentPage: number,
     isFetching: boolean,
-    followingInProgress: boolean
+    followingInProgress: Array<number>
 }
 
 const defaultState = {
@@ -77,7 +77,7 @@ const defaultState = {
     pageSize: 3,
     currentPage: 1,
     isFetching: false,
-    followingInProgress: false
+    followingInProgress: []
 }
 export const usersPageReducer = (state: DefaultStateType = defaultState, action: UsersReducerActionsType): DefaultStateType => {
     switch (action.type) {
@@ -119,6 +119,8 @@ export const usersPageReducer = (state: DefaultStateType = defaultState, action:
             return {
                 ...state,
                 followingInProgress: action.isFollowingInProgress
+                    ? [...state.followingInProgress, action.userId]
+                    : [...state.followingInProgress.filter(id => id !== action.userId)]
             }
         default:
             return state
@@ -141,7 +143,8 @@ export const changeCurrenUserstPage = (currentPage: number): ChangeCurrentUserPa
 
 export const isFetchingUsers = (isFetching: boolean): IsFetchingType => ({type: IS_FETCHING, isFetching})
 
-export const fetchingFollowingInProgress = (isFollowingInProgress: boolean): ToggleFollowingUserType => ({
+export const fetchingFollowingInProgress = (userId: number, isFollowingInProgress: boolean): ToggleFollowingUserType => ({
     type: FETCHING_FOLLOWING_IN_PROGRESS,
+    userId,
     isFollowingInProgress
 })
