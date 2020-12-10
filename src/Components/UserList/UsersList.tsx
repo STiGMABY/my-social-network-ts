@@ -26,14 +26,16 @@ export const UsersList = () => {
 
     useEffect(() => {
         dispatch(isFetchingUsers(true))
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currantPage}&count=${pageSize}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currantPage}&count=${pageSize}`,{
+            withCredentials:true
+        })
             .then(response => {
                 //debugger
                 dispatch(isFetchingUsers(false))
                 dispatch(setUsersFromApi(response.data.items))
                 dispatch(getTotalUsersCountFromApi(response.data.totalCount = 17))
             })
-    }, [currantPage])
+    }, [currantPage, pageSize, dispatch])
 
     const changeUsersPage = (page: number) => {
         dispatch(changeCurrenUserstPage(page))
@@ -47,7 +49,7 @@ export const UsersList = () => {
     for (let i = 1; i <= numberOfPages; i++) {
         pages.push(i)
     }
-    console.log(currantPage)
+    //console.log(currantPage)
     return (
         <div>
             <h1>UserList:</h1>
@@ -56,6 +58,7 @@ export const UsersList = () => {
                 {
                     pages.map(page => {
                         return <span
+                            key={page}
                             onClick={(event) => changeUsersPage(page)}
                             className={currantPage === page ? s.pagesToggle : ''}>{page}</span>
                     })
@@ -65,7 +68,7 @@ export const UsersList = () => {
                 {
                     isFetching
                         ? <div className={s.preloader}>
-                            <img src={preloader}/>
+                            <img src={preloader} alt={''}/>
                         </div>
                         : users.map(u => {
                             return <UserListItem

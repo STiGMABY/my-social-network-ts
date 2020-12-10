@@ -72,6 +72,7 @@ const defaultState = {
 export const usersPageReducer = (state: DefaultStateType = defaultState, action: UsersReducerActionsType): DefaultStateType => {
     switch (action.type) {
         case FOLLOW:
+            //debugger
             return {
                 ...state,
                 users: state.users.map((u): SocialNetAPIUsersType => {
@@ -84,6 +85,7 @@ export const usersPageReducer = (state: DefaultStateType = defaultState, action:
                 })
             }
         case UNFOLLOW:
+            //debugger
             return {
                 ...state,
                 users: state.users.map((u): SocialNetAPIUsersType => {

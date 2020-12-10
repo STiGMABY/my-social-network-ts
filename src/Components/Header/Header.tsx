@@ -19,7 +19,7 @@ export const Header = () => {
         axios.get('https://social-network.samuraijs.com/api/1.0/auth/me', settings)
             .then(res => {
                 const {id, login, email} = res.data.data
-                debugger
+                //debugger
                 if (res.data.resultCode === 0) {
                     dispatch(authUserOnApi(id, login, email))
                 }

@@ -31,7 +31,7 @@ const DefaultAuthReducer: DefaultAuthReducerType = {
 export const authReducer = (state = DefaultAuthReducer, action: AuthReducerTypes) => {
     switch (action.type) {
         case AUTH_USER:
-            debugger
+            //debugger
             return {
                 ...state,
                 userData:{
