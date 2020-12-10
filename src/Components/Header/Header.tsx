@@ -1,23 +1,18 @@
 import React, {useEffect} from "react";
 import s from './Header.module.css'
 import {NavLink} from 'react-router-dom'
-import axios from 'axios'
-import {useDispatch, useSelector} from "react-redux";
-import {AppStateType} from "../../redux/redux";
-import {authUserOnApi, DefaultAuthReducerType} from "../../redux/reducers/auth-reducer";
-
-const settings = {
-    withCredentials: true
-}
+import {useDispatch} from "react-redux";
+import {authUserOnApi} from "../../redux/reducers/auth-reducer";
+import {authUserDAL} from "../../api/api";
 
 export const Header = () => {
 
-    //const authUser = useSelector<AppStateType, DefaultAuthReducerType>(state => state.authReducer)
     const dispatch = useDispatch()
 
     useEffect(() => {
-        axios.get('https://social-network.samuraijs.com/api/1.0/auth/me', settings)
+        authUserDAL()
             .then(res => {
+                //debugger
                 const {id, login, email} = res.data.data
                 //debugger
                 if (res.data.resultCode === 0) {

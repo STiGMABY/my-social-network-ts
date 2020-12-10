@@ -1,10 +1,10 @@
-import React, {useEffect} from "react";
+import React from "react";
 import s from './UserListItem.module.css'
 import {followUser, unfollowUser} from "../../../redux/reducers/users-reducer";
 import {useDispatch} from "react-redux";
 import avaAnonymous from '../../../common/images/avaAnonymous.jpg'
 import {NavLink} from "react-router-dom";
-import axios from 'axios'
+import {followUserDAL, unfollowUserDAL} from "../../../api/api";
 
 type PropsType = {
     name: string
@@ -40,14 +40,9 @@ export const UserListItem = (props: PropsType) => {
                 </div>
                 <div>{followed
                     ? <button onClick={() => {
-                        axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${id}`, {
-                            withCredentials: true,
-                            headers: {
-                                "api-key": "1395fcf2-9369-4c85-86f6-e7d2933a85b4"
-                            }
-                        })
+                        unfollowUserDAL(id)
                             .then(res => {
-                                debugger
+                                //debugger
                                 if (res.data.resultCode === 0) {
                                     unfollowUserFunc(id)
                                 }
@@ -56,12 +51,7 @@ export const UserListItem = (props: PropsType) => {
                     }>Unfollow</button>
 
                     : <button onClick={() => {
-                        axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${id}`, {}, {
-                            withCredentials: true,
-                            headers: {
-                                "api-key": "1395fcf2-9369-4c85-86f6-e7d2933a85b4"
-                            }
-                        })
+                        followUserDAL(id)
                             .then(res => {
                                 if (res.data.resultCode === 0) {
                                     followUserFunc(id)

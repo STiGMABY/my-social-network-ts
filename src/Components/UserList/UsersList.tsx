@@ -9,9 +9,9 @@ import {
     setUsersFromApi,
     SocialNetAPIUsersType
 } from "../../redux/reducers/users-reducer";
-import axios from 'axios'
 import {UserListItem} from "./UserListItem/UserListItem";
 import preloader from '../../images/blueCat.gif'
+import {getUsersDAL} from "../../api/api";
 
 
 export const UsersList = () => {
@@ -26,14 +26,12 @@ export const UsersList = () => {
 
     useEffect(() => {
         dispatch(isFetchingUsers(true))
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currantPage}&count=${pageSize}`,{
-            withCredentials:true
-        })
+        getUsersDAL(currantPage, pageSize)
             .then(response => {
                 //debugger
                 dispatch(isFetchingUsers(false))
-                dispatch(setUsersFromApi(response.data.items))
-                dispatch(getTotalUsersCountFromApi(response.data.totalCount = 17))
+                dispatch(setUsersFromApi(response.items))
+                dispatch(getTotalUsersCountFromApi(response.totalCount = 17))
             })
     }, [currantPage, pageSize, dispatch])
 
