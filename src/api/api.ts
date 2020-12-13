@@ -8,21 +8,20 @@ const instance = axios.create({
     }
 })
 
-export const getUsersDAL = (currantPage: number,pageSize: number ) => {
-    return instance.get(`users?page=${currantPage}&count=${pageSize}`)
-        .then(res => {
-            return res.data
-        })
-}
-
-export const unfollowUserDAL = (id: number) => {
-    return instance.delete(`follow/${id}`)
-}
-
-export const followUserDAL = (id: number) => {
-    return instance.post(`follow/${id}`, {})
-}
-
-export const authUserDAL = () => {
-    return instance.get(`auth/me`)
+export const usersAPI = {
+    getUsersDAL(currantPage: number,pageSize: number ){
+        return instance.get(`users?page=${currantPage}&count=${pageSize}`)
+            .then(res => {
+                return res.data
+            })
+    },
+    unfollowUserDAL(id: number){
+        return instance.delete(`follow/${id}`)
+    },
+    followUserDAL(id: number){
+        return instance.post(`follow/${id}`, {})
+    },
+    authUserDAL(){
+        return instance.get(`auth/me`)
+    }
 }

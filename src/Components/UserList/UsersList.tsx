@@ -11,7 +11,7 @@ import {
 } from "../../redux/reducers/users-reducer";
 import {UserListItem} from "./UserListItem/UserListItem";
 import preloader from '../../images/blueCat.gif'
-import {getUsersDAL} from "../../api/api";
+import {usersAPI} from "../../api/api";
 
 
 export const UsersList = () => {
@@ -27,7 +27,7 @@ export const UsersList = () => {
 
     useEffect(() => {
         dispatch(isFetchingUsers(true))
-        getUsersDAL(currantPage, pageSize)
+        usersAPI.getUsersDAL(currantPage, pageSize)
             .then(response => {
                 //debugger
                 dispatch(isFetchingUsers(false))

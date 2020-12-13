@@ -2,6 +2,7 @@
     grid-area: h;
     color: white;
     /*background-color: beige;*/
+    margin: 10px;
 }
 .navWrapper{
     display: flex;

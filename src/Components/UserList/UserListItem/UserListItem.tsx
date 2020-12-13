@@ -4,7 +4,7 @@ import {fetchingFollowingInProgress, followUser, unfollowUser} from "../../../re
 import {useDispatch} from "react-redux";
 import avaAnonymous from '../../../common/images/avaAnonymous.jpg'
 import {NavLink} from "react-router-dom";
-import {followUserDAL, unfollowUserDAL} from "../../../api/api";
+import {usersAPI} from "../../../api/api";
 
 type PropsType = {
     name: string
@@ -45,7 +45,7 @@ export const UserListItem = (props: PropsType) => {
                         disabled={isFollowingInProgress.some(userId => userId === id)}
                         onClick={() => {
                             dispatch(fetchingFollowingInProgress(id, true))
-                            unfollowUserDAL(id)
+                            usersAPI.unfollowUserDAL(id)
                                 .then(res => {
                                     //debugger
                                     if (res.data.resultCode === 0) {
@@ -60,7 +60,7 @@ export const UserListItem = (props: PropsType) => {
                         disabled={isFollowingInProgress.some(userId => userId === id)}
                         onClick={() => {
                             dispatch(fetchingFollowingInProgress(id, true))
-                            followUserDAL(id)
+                            usersAPI.followUserDAL(id)
                                 .then(res => {
                                     if (res.data.resultCode === 0) {
                                         followUserFunc(id)

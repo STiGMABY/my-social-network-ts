@@ -6,6 +6,7 @@ type AuthUserType = {
         id: string
         login: string
         email: string
+        isAuth: boolean
     }
 }
 
@@ -17,6 +18,7 @@ export type DefaultAuthReducerType = {
         id: string | null
         login: string | null
         email: string | null
+        isAuth: boolean
     }
 }
 
@@ -24,7 +26,8 @@ const DefaultAuthReducer: DefaultAuthReducerType = {
     userData:{
         id: null,
         login: null,
-        email: null
+        email: null,
+        isAuth: false
     }
 }
 
@@ -37,7 +40,8 @@ export const authReducer = (state = DefaultAuthReducer, action: AuthReducerTypes
                 userData:{
                     id: action.userData.id,
                     login: action.userData.login,
-                    email: action.userData.email
+                    email: action.userData.email,
+                    isAuth: action.userData.isAuth
                 }
             }
         default:
@@ -45,11 +49,12 @@ export const authReducer = (state = DefaultAuthReducer, action: AuthReducerTypes
     }
 }
 
-export const authUserOnApi = (id: string, login: string, email: string): AuthUserType => ({
+export const authUserOnApi = (id: string, login: string, email: string, isAuth: boolean): AuthUserType => ({
     type: AUTH_USER,
     userData:{
         id,
         login,
-        email
+        email,
+        isAuth
     }
 })

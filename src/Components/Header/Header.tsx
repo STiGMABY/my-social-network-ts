@@ -1,22 +1,24 @@
 import React, {useEffect} from "react";
 import s from './Header.module.css'
 import {NavLink} from 'react-router-dom'
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {authUserOnApi} from "../../redux/reducers/auth-reducer";
-import {authUserDAL} from "../../api/api";
+import {usersAPI} from "../../api/api";
+import {AppStateType} from "../../redux/redux";
 
 export const Header = () => {
 
+    const isAuthValue = useSelector<AppStateType, boolean>(state => state.authReducer.userData.isAuth)
     const dispatch = useDispatch()
 
     useEffect(() => {
-        authUserDAL()
+        usersAPI.authUserDAL()
             .then(res => {
                 //debugger
                 const {id, login, email} = res.data.data
                 //debugger
                 if (res.data.resultCode === 0) {
-                    dispatch(authUserOnApi(id, login, email))
+                    dispatch(authUserOnApi(id, login, email, true))
                 }
             })
     })
@@ -25,9 +27,18 @@ export const Header = () => {
         <div className={s.header}>
             <div className={s.navWrapper}>
                 <nav className={s.nav}>
-                    <NavLink to={'/login'}>Login</NavLink>
-                    <NavLink to={'/logout'}>Logout</NavLink>
-                    <NavLink to={'/registration'}>Registration</NavLink>
+                    {
+                        isAuthValue
+                            ? <div>
+                                <NavLink to={'/logout'}>
+                                    <button>Logout</button>
+                                </NavLink>
+                            </div>
+                            : <div>
+                                <NavLink to={'/login'}>Login</NavLink>
+                                <NavLink to={'/registration'}>Registration</NavLink>
+                            </div>
+                    }
                 </nav>
             </div>
         </div>
