@@ -1,10 +1,10 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {setUsersProfileFromApi, UserProfileType} from "../../../redux/reducers/main-page-reducer";
+import {setUserNewStatus, setUsersProfileFromApi, UserProfileType} from "../../../redux/reducers/main-page-reducer";
 import {AppStateType} from "../../../redux/redux";
 import {useParams} from "react-router";
 import {MainPageUserInfoItem} from "./MainPageUserInfoItem/MainPageUserInfoItem";
-import {usersAPI} from "../../../api/api";
+import {mainPageAPI} from "../../../api/api";
 
 type ParamType = {
     userId: string
@@ -19,13 +19,21 @@ export const MainPageUserInfo = (...props: any) => {
     const userProfile = useSelector<AppStateType, UserProfileType | null>(state => state.mainPageReducer.userProfile)
 
     useEffect(() => {
-        if(!userId){
+        if (!userId) {
             userId = '2'
         }
-        usersAPI.getUserInfo(userId)
+        mainPageAPI.getUserInfo(userId)
             .then(res => {
                 //debugger
                 dispatch(setUsersProfileFromApi(res.data))
+            })
+    }, [dispatch, userId])
+
+    useEffect(() => {
+        mainPageAPI.getUserInfo(userId)
+            .then(res => {
+                //debugger
+                dispatch(setUserNewStatus(res.data.aboutMe))
             })
     }, [dispatch, userId])
 

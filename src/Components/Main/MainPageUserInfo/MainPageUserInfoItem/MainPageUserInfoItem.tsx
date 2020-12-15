@@ -1,14 +1,20 @@
-import React, {useState} from "react";
-import {UserProfileType} from "../../../../redux/reducers/main-page-reducer";
+import React, {ChangeEvent, useState} from "react";
+import {setUserNewStatus, UserProfileType} from "../../../../redux/reducers/main-page-reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {AppStateType} from "../../../../redux/redux";
 
 type PropsType = {
     userProfile: UserProfileType
 }
 
 export const MainPageUserInfoItem = (props: PropsType) => {
+    const userLocalStatus = useSelector<AppStateType, string>(state => state.mainPageReducer.userStatus)
+
+    const dispatch = useDispatch()
 
     // const {} = props
     const [editMode, setEditMode] = useState(false)
+    const [userStatus, setUserStatus] = useState(userLocalStatus)
 
     const startEditStatus = () => {
         setEditMode(true)
@@ -16,10 +22,16 @@ export const MainPageUserInfoItem = (props: PropsType) => {
 
     const endEditStatus = () => {
         setEditMode(false)
+        dispatch(setUserNewStatus(userStatus))
     }
 
     const showLargePhoto = () => {
 
+    }
+
+    const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setUserStatus(e.target.value)
+        console.log(userStatus)
     }
 
     return (
@@ -36,17 +48,19 @@ export const MainPageUserInfoItem = (props: PropsType) => {
                 {
                     editMode
                         ? <div>
-                            <input type="text" onBlur={endEditStatus} autoFocus={true}/>
+                            <input
+                                value={userStatus}
+                                type="text"
+                                onBlur={endEditStatus}
+                                autoFocus={true}
+                                onChange={onStatusChange}
+                            />
                         </div>
                         : <div>
-                            <span onDoubleClick={startEditStatus}>Your status is here: {props.userProfile.aboutMe}</span>
+                            <span onDoubleClick={startEditStatus}>Your status is here: {userLocalStatus}</span>
                         </div>
                 }
             </div>
-            {/*<div className={s.userInfoWrapper}>*/}
-            {/*    <div className={s.name}>{name}</div>*/}
-            {/*    <div>{status !== null ? status : <span>Double click and set your status</span>}</div>*/}
-            {/*</div>*/}
         </div>
     )
 }

@@ -71,7 +71,8 @@ export const UserListItem = (props: PropsType) => {
             </div>
             <div className={s.userInfoWrapper}>
                 <div className={s.name}>{name}</div>
-                <div>{status !== null ? status : <span>Double click and set your status</span>}</div>
+                <div>{status !== null ? status : <span>Set your status</span>}</div>
+                <div>{photos.small !== null ? '' : <span>Add your photo</span>}</div>
             </div>
         </div>
     )
