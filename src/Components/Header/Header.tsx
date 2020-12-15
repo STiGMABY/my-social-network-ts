@@ -3,7 +3,7 @@ import s from './Header.module.css'
 import {NavLink} from 'react-router-dom'
 import {useDispatch, useSelector} from "react-redux";
 import {authUserOnApi} from "../../redux/reducers/auth-reducer";
-import {usersAPI} from "../../api/api";
+import {authAPI, usersAPI} from "../../api/api";
 import {AppStateType} from "../../redux/redux";
 
 export const Header = () => {
@@ -12,7 +12,7 @@ export const Header = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        usersAPI.authUserDAL()
+        authAPI.authUserDAL()
             .then(res => {
                 //debugger
                 const {id, login, email} = res.data.data

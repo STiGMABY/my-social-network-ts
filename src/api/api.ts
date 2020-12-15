@@ -21,6 +21,12 @@ export const usersAPI = {
     followUserDAL(id: number){
         return instance.post(`follow/${id}`, {})
     },
+    getUserInfo(userId: string){
+        return instance.get(`profile/${userId}`)
+    }
+}
+
+export const authAPI = {
     authUserDAL(){
         return instance.get(`auth/me`)
     }
