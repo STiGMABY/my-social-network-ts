@@ -7,7 +7,7 @@ import {Footer} from "./Components/Footer/Footer";
 import {UsersList} from "./Components/UserList/UsersList";
 import {BrowserRouter, Route} from "react-router-dom";
 import {Registration} from "./Components/Registration/Registration";
-import {Login} from "./Components/Login/Login";
+import {LoginReduxForm} from "./Components/Login/Login";
 
 const App = () => (
     <BrowserRouter>
@@ -19,7 +19,7 @@ const App = () => (
                     <Route path={'/main-page/:userId?'} render={() => <Main/>}/>
                     <Route path={'/users-list'} render={() => <UsersList/>}/>
                     <Route path={'/registration'} render={() => <Registration/>}/>
-                    <Route path={'/login'} render={() => <Login/>}/>
+                    <Route path={'/login'} render={() => <LoginReduxForm/>}/>
                 </div>
                 <Footer/>
             </div>
