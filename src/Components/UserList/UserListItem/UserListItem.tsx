@@ -19,7 +19,6 @@ type PropsType = {
 }
 
 export const UserListItem = (props: PropsType) => {
-
     const {id, name, photos, followed, status, isFollowingInProgress} = props
 
     const dispatch = useDispatch()

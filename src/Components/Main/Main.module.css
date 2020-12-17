@@ -1,6 +1,11 @@
 .main{
     grid-area: m;
     color: white;
-    height: 100vh;
-    /*background-color: aquamarine;*/
+    /*height: 100vh;*/
+    background-color: darkgray;
+    padding: 15px;
+    /*box-shadow: inset 0 0 12px dimgrey;*/
+    box-shadow: 7px 7px 5px rgba(0,0,0,0.6);
+    border-radius: 5px;
 }
+

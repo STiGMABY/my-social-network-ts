@@ -1,8 +1,11 @@
 .nav{
     grid-area: n;
-    color: white;
     /*background-color: burlywood;*/
     display: flex;
     flex-direction: column;
     margin: 10px;
+}
+.nav a{
+    color: white;
+    text-decoration: none;
 }

@@ -1,5 +1,17 @@
+.usersPageWrapper{
+    color: white;
+    background-color: darkgray;
+    padding: 15px;
+    box-shadow: 7px 7px 5px rgba(0,0,0,0.6);
+    border-radius: 5px;
+}
+
 .pagesToggle{
     font-weight: bold;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    /*margin: 10px;*/
 }
 
 .preloader img{
@@ -7,4 +19,8 @@
     margin: auto auto;
     height: 400px;
     width: 400px;
+}
+
+.paginationWrapper span{
+    margin: 5px;
 }

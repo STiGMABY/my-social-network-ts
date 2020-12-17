@@ -58,7 +58,7 @@ export type UserProfileType = {
     }
 }
 
-type FakeChatMessageType = {
+export type FakeChatMessageType = {
     id: number,
     message: string,
     likesCount: number
@@ -84,8 +84,17 @@ export const defaultMainPageState = {
 
 export const mainPageReducer = (state: DefaultMainPageState = defaultMainPageState, action: MainPageActionTypes): DefaultMainPageState => {
     switch (action.type) {
-        case "ADD_MAIN_PAGE_POST":
-            return {...state}
+        case ADD_MAIN_PAGE_POST:
+            const newMessage = {
+                id: 8,
+                message: action.newPost,
+                likesCount: 0
+            }
+            return {
+                ...state,
+                fakeChatMessages: [newMessage, ...state.fakeChatMessages]
+            }
+
         case SET_USER_PROFILE_FROM_API:
             return {...state, userProfile: action.userProfile}
         case SET_USER_STATUS:

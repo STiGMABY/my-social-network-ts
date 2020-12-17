@@ -50,10 +50,10 @@ export const UsersList = () => {
     }
     //console.log(currantPage)
     return (
-        <div>
-            <h1>UserList:</h1>
+        <div className={s.usersPageWrapper}>
+            <h1>UserList</h1>
             <hr/>
-            <div>
+            <div className={s.paginationWrapper}>
                 {
                     pages.map(page => {
                         return <span

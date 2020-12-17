@@ -4,6 +4,7 @@ import { Field, reduxForm } from 'redux-form'
 export const Login = (props: any) => {
     const {handleSubmit} = props
     //debugger
+    console.log(handleSubmit)
     return(
         <div>
             <h1>Login</h1>

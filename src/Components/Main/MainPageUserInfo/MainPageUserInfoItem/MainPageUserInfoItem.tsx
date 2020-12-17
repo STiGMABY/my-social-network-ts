@@ -38,7 +38,7 @@ export const MainPageUserInfoItem = (props: PropsType) => {
         <div>
             <div>
                 {
-                    <img onClick={showLargePhoto} src={props.userProfile.photos.small} alt=""/>
+                    <img onClick={showLargePhoto} src={props.userProfile.photos.small} alt="small photo"/>
                 }
             </div>
             <div>
